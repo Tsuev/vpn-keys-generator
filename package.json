@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "node-fetch": "^3.3.2",
+    "node-telegram-bot-api": "^0.66.0",
+    "nodemon": "^3.1.11",
+    "undici": "^7.16.0",
+    "uuid": "^13.0.0"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "type": "module"
+}
