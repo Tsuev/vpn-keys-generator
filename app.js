@@ -12,16 +12,16 @@ bot.on("message", async (msg) => {
   const whitelistIds = loadWhitelist();
 
   if (msg.from.id == process.env.ADMIN_ID && typeof +msg.text === "number") {
-    fs.appendFileSync("data.txt", `${msg.text}\n`, "utf8");
-    return;
-  }
+    fs.appendFile(filePath, `${userId}\n`, "utf8", (err) => {
+      if (err) {
+        console.error(err);
+        bot.sendMessage(msg.chat.id, "Ошибка при добавлении ID");
+        return;
+      }
 
-  if (msg.text === "/start") {
-    bot.sendMessage(msg.chat.id, "Бот для бесплатного получения VPN", {
-      reply_markup: {
-        keyboard: [["Получить VPN"], ["Получить мой ID"]],
-      },
+      bot.sendMessage(msg.chat.id, "ID добавлен в список");
     });
+    return;
   }
 
   if (msg.text === "Получить VPN") {
