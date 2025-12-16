@@ -2,6 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import dotenv from "dotenv";
 import { getClient, addClient } from "./services/vpnService.js";
 import { loadWhitelist } from "./helpers/whitelist.js";
+import fs from "fs";
 
 dotenv.config();
 
@@ -9,6 +10,11 @@ const bot = new TelegramBot(process.env.TG_API_TOKEN, { polling: true });
 
 bot.on("message", async (msg) => {
   const whitelistIds = loadWhitelist();
+
+  if (msg.from.id == process.env.ADMIN_ID && typeof +msg.text === "number") {
+    fs.appendFileSync("data.txt", `${msg.text}\n`, "utf8");
+    return;
+  }
 
   if (msg.text === "/start") {
     bot.sendMessage(msg.chat.id, "Бот для бесплатного получения VPN", {
